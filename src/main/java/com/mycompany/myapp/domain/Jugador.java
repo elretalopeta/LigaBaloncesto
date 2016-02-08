@@ -28,23 +28,23 @@ public class Jugador implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    
+
+
     @Column(name = "nombre")
     private String nombre;
-    
+
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @JsonSerialize(using = CustomLocalDateSerializer.class)
     @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
     @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
-    
+
     @Column(name = "num_canastas")
     private Integer numCanastas;
-    
+
     @Column(name = "num_rebotes")
     private Integer numRebotes;
-    
+
     @Column(name = "posicion")
     private String posicion;
 

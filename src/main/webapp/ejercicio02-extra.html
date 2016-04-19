@@ -1,0 +1,50 @@
+
+<div>
+    <br/>
+    <div class="container" ng-cloak>
+        <div class="well">
+            <form name="formJugador" ng-submit="save()">
+
+                Equipos:
+                <select ng-model="equipo" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" required>
+                <option ng-repeat="equipo in equipos" value="{{equipo.id}}">{{equipo.nombre}}</option>
+                </select><br/>
+
+                Canastas:
+                <input type="text" name="nombre" ng-model="canastas" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" required/>
+                <span ng-show="formJugador.nombre.$touched && formJugador.nombre.$invalid">Canastas Requeridas</span><br/>
+
+                <button type="submit" ng-disabled="formJugador.$invalid || isSaving" class="btn btn-primary">
+                    <span>Save</span>
+                </button>
+
+            </form>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <td ng-click="filtrarPor('+nombre')">Nombre</td>
+                    <td ng-click="filtrarPor('+posicion')">Posicion</td>
+                    <td ng-click="filtrarPor('+canastasTotales')">Canastas Totales</td>
+                    <td ng-click="filtrarPor('jugador.equipo.id')">Equipo</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="jugador in jugadores | orderBy:filtracion">
+                    <td ng-if="$odd" style="background-color:#f1f1f1">{{jugador.nombre}}</td>
+                    <td ng-if="$even">{{jugador.nombre}}</td>
+
+                    <td ng-if="$odd" style="background-color:#f1f1f1">{{jugador.posicion}}</td>
+                    <td  ng-if="$even">{{jugador.posicion}}</td>
+
+                    <td ng-if="$odd" style="background-color:#f1f1f1">{{jugador.numCanastas}}</td>
+                    <td  ng-if="$even">{{jugador.numCanastas}}</td>
+
+                    <td ng-if="$odd" style="background-color:#f1f1f1">{{jugador.equipo.nombre}}</td>
+                    <td ng-if="$even">{{jugador.equipo.nombre}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

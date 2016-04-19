@@ -81,6 +81,7 @@ public class JugadorResource {
         Page<Jugador> page = jugadorRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/jugadors", offset, limit);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+
     }
 
     /**
@@ -98,6 +99,36 @@ public class JugadorResource {
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+
+    @RequestMapping(value = "/jugadors/canastas/{canastas}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Jugador>> get(@PathVariable Integer canastas) {
+        log.debug("REST request to get Jugador : {}", canastas);
+        return Optional.ofNullable(jugadorRepository.findByNumCanastasGreaterThanEqual(canastas))
+            .map(jugador -> new ResponseEntity<>(
+                jugador,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @RequestMapping(value = "/jugadors/equipocanastas/{id}/{canastas}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Jugador>> get(@PathVariable Long id, @PathVariable Integer canastas) {
+        log.debug("REST request to get Jugador : {}", id, canastas);
+
+
+        return Optional.ofNullable(jugadorRepository.equipoycanastas(id, canastas))
+            .map(jugador -> new ResponseEntity<>(
+                jugador,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 
     /**
      * DELETE  /jugadors/:id -> delete the "id" jugador.
